@@ -21,6 +21,8 @@ class GameViewController: UIViewController {
         appDelegate.mpcManager.delegate = self
         //appDelegate.mpcManager.enableServices(enable: true)
         
+        
+        
         loadControllerScene()
     }
     
