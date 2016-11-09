@@ -36,7 +36,7 @@ class MPCManager: NSObject {
     var invitationHandler: ((Bool, MCSession?) -> Void)!
     
     lazy var session:MCSession = {
-        let session = MCSession(peer: self.peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.required)
+        let session = MCSession(peer: self.peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none)
         return session
     }()
     
@@ -153,21 +153,21 @@ extension MPCManager: MCSessionDelegate {
         
         switch state {
         case .connected:
-            print("Connected to session: \(session)")
+            print("\n \n Connected to session: \(session) \n \n")
             delegate?.connectedWithPeer(peerID: peerID)
         case .connecting:
-            print("Connecting to session: \(session)")
+            print("\n\nConnecting to session: \(session)\n\n")
         default:
-            print("Did not connect to session: \(session)")
+            print("\n\nDid not connect to session: \(session)\n\n")
         }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        
-        
+        print("\n\n DID RECEIVE FROM APPLE TV \n\n")
     }
     
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        print("\n\n DID START RECEIVING FROM APPLE TV \n\n")
     }
     
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL, withError error: Error?) {

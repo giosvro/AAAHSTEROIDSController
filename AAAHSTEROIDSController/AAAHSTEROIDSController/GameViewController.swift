@@ -19,11 +19,9 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         appDelegate.mpcManager.delegate = self
-        //appDelegate.mpcManager.enableServices(enable: true)
+        appDelegate.mpcManager.enableServices(enable: true)
         
-        
-        
-        loadControllerScene()
+        //loadControllerScene()
     }
     
     func loadControllerScene() {
@@ -82,18 +80,23 @@ extension GameViewController: MPCManagerDelegate {
         //var textField: UITextField?
         
         //criação de um alert view em que o usuario digita o código que aparece na Apple TV para fazer a conexão
+        
         let alert = UIAlertController(title: "Join a match", message: "Enter the code shown on your Apple TV", preferredStyle: .alert)
 
         alert.addTextField(configurationHandler: textFieldHandler)
         
-        let codeTyped = alert.textFields?.first?.text
+        
         
         alert.addAction(UIAlertAction(title: "Connect", style: UIAlertActionStyle.default, handler:{ (UIAlertAction) in
+            
+            let codeTyped = alert.textFields?.first?.text
+            print("\n \n CODE RECEIVED: \(codeReceived)")
+            print("\n \n CODE TYPED: \(codeTyped)")
             
             if codeReceived != nil {
                 if codeTyped == codeReceived {
                     self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
-                    print("Started session with \(fromPeer)")
+                    print("Will start session with \(fromPeer)")
                 }
                 else {
                     //TODO: implementar um erro decente para código errado

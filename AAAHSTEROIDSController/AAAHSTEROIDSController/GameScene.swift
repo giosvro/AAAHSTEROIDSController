@@ -76,7 +76,7 @@ class GameScene: SKScene {
         print("\n toque \(counter) x: \(xPos) y: \(yPos)")
         
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
-        /*
+        
         messageToSend = ["sender": peerName, "x": xPos, "y": yPos]
         
         //TODO: PRECISA REVISAR!
@@ -86,9 +86,7 @@ class GameScene: SKScene {
         } else {
             print("error: message not sent")
         }
-         */
-        
-        
+ 
     }
     
     func touchUp(atPoint pos : CGPoint) {
