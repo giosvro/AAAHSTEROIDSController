@@ -18,10 +18,10 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appDelegate.mpcManager.delegate = self
-        appDelegate.mpcManager.enableServices(enable: true)
+        //appDelegate.mpcManager.delegate = self
+        //appDelegate.mpcManager.enableServices(enable: true)
         
-        //loadControllerScene()
+        loadControllerScene()
     }
     
     func loadControllerScene() {

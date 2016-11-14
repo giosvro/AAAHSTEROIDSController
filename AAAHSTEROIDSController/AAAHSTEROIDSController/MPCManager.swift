@@ -36,7 +36,7 @@ class MPCManager: NSObject {
     var invitationHandler: ((Bool, MCSession?) -> Void)!
     
     lazy var session:MCSession = {
-        let session = MCSession(peer: self.peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none)
+        let session = MCSession(peer: self.peerID, securityIdentity: nil, encryptionPreference: MCEncryptionPreference.none )
         return session
     }()
     
