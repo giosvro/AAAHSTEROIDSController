@@ -22,6 +22,8 @@ class GameScene: SKScene {
     
     var touch1 = CGPoint()
     var touch2 = CGPoint()
+    
+    var fronteira = CGFloat()
     //var dx = CGFloat()
     //var dy = CGFloat()
     var direction = CGVector()
@@ -36,7 +38,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         
         
-        
+        fronteira = 0.2*view.bounds.size.width
         peerName = appDelegate.mpcManager.peerID.displayName
         
         //messageToSend = [peerName:["x":"", "y": ""]]
@@ -47,7 +49,7 @@ class GameScene: SKScene {
         self.miraNode = self.childNode(withName: "//mira") as? SKSpriteNode
         if let mira = self.miraNode {
             mira.alpha = 0.0
-            mira.run(SKAction.fadeIn(withDuration: 2.0))
+            //mira.run(SKAction.fadeIn(withDuration: 2.0))
         }
         
         // Create shape node to use during mouse interaction
@@ -66,12 +68,20 @@ class GameScene: SKScene {
  */
     }
     
-    func moveMira(dir: CGVector, duration: Double){
+    func moveMira( dir: CGVector, duration: Double){
         
-        //move.
-        move = SKAction.move(by: dir, duration: duration)
+        var direct = dir
         
+        //move = SKAction.move(by: dir, duration: duration)
+        if ((miraNode?.position.x)! < fronteira || dir.dx < 0) {
+            
+        } else {
+            direct.dx = 0
+        }
+        
+        move = SKAction.move(by: direct, duration: duration)
         miraNode?.run(move)
+        print("\n posicao x \(miraNode?.position.x) fronteira: \(fronteira)")
         
         
     }
@@ -83,6 +93,9 @@ class GameScene: SKScene {
             n.strokeColor = SKColor.green
             self.addChild(n)
         }*/
+        
+        miraNode?.position = pos
+        miraNode?.alpha = 1
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -92,26 +105,22 @@ class GameScene: SKScene {
             self.addChild(n)
         }*/
         
-        touch1 = touch2;
-        touch2 = pos;
+        touch1 = touch2
+        touch2 = pos
         let dx: CGFloat = touch2.x - touch1.x
         let dy: CGFloat = touch2.y - touch1.y
         
         
+        //calculo do tempo de acordo com a velocidade = 30
         let norma = sqrt(dx*dx + dy*dy)
         direction = CGVector(dx: dx, dy: dy)
         let time = norma / 30.0
+        
         moveMira(dir: direction, duration: Double(time))
-        
-        //direction = touch2 - touch1;
-        
-        
-        let xPos = String(describing: pos.x)
-        let yPos = String(describing: pos.y)
         
         counter += 1
         
-        print("\n toque \(counter) x: \(xPos) y: \(yPos)")
+        print("\n toque \(counter) direction: \(direction)")
         
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
         
@@ -140,6 +149,8 @@ class GameScene: SKScene {
         touch2 = CGPoint.zero;
         
         miraNode?.removeAllActions()
+        
+        miraNode?.alpha = 0
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -151,11 +162,8 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches {
-            //let touchedNode = self.atPoint(t.location(in: self))
-        
+        let t = touches.first!
             self.touchMoved(toPoint: t.location(in: self))
-        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
