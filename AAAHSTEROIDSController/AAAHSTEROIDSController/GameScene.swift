@@ -12,7 +12,7 @@ import GameplayKit
 class GameScene: SKScene {
     
     //TODO: mudar para string:any depois ::: duvida
-    var messageToSend: [String:String] = ["":""]
+    
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -24,11 +24,11 @@ class GameScene: SKScene {
     var touch2 = CGPoint()
     
     var fronteira = CGFloat()
-    //var dx = CGFloat()
-    //var dy = CGFloat()
-    var direction = CGVector()
+
+    let velocidade: CGFloat = 60.0
     
-    var move = SKAction()
+    var touched : Bool = false
+    var location : CGPoint!
     
     //var location = ()
     
@@ -37,145 +37,109 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        
+
         fronteira = 0.2*view.bounds.size.width
         peerName = appDelegate.mpcManager.peerID.displayName
         
         //messageToSend = [peerName:["x":"", "y": ""]]
         
-        
-        // Get label node from scene and store it for use later
-
+        //node usado foi criado na SKScene do storyboard
         self.miraNode = self.childNode(withName: "//mira") as? SKSpriteNode
         if let mira = self.miraNode {
             mira.alpha = 0.0
-            //mira.run(SKAction.fadeIn(withDuration: 2.0))
+            mira.zPosition = 5
+            //mira.physicsBody = SKPhysicsBody(rectangleOf: mira.size)
         }
-        
-        // Create shape node to use during mouse interaction
-        /*let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(M_PI), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
- 
- */
     }
     
-    func moveMira( dir: CGVector, duration: Double){
+    func moveMira(dir: CGVector){
         
-        var direct = dir
+        var mutableDir = dir
+    
+        print("\n 2. posicao x \(miraNode?.position.x) fronteira: \(fronteira)")
         
-        //move = SKAction.move(by: dir, duration: duration)
-        if ((miraNode?.position.x)! < fronteira || dir.dx < 0) {
-            
-        } else {
-            direct.dx = 0
+        if ((miraNode?.position.x)! >= fronteira && dir.dx > 0) {
+            print("\n 3. verifica fronteira")
+            mutableDir.dx = 0
         }
         
-        move = SKAction.move(by: direct, duration: duration)
-        miraNode?.run(move)
-        print("\n posicao x \(miraNode?.position.x) fronteira: \(fronteira)")
-        
-        
+        mutableDir.applyModule(speed: velocidade)
+        miraNode?.physicsBody?.velocity = mutableDir
     }
     
-    
-    func touchDown(atPoint pos : CGPoint) {
-        /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }*/
-        
-        miraNode?.position = pos
-        miraNode?.alpha = 1
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }*/
-        
-        touch1 = touch2
-        touch2 = pos
-        let dx: CGFloat = touch2.x - touch1.x
-        let dy: CGFloat = touch2.y - touch1.y
-        
-        
-        //calculo do tempo de acordo com a velocidade = 30
-        let norma = sqrt(dx*dx + dy*dy)
-        direction = CGVector(dx: dx, dy: dy)
-        let time = norma / 30.0
-        
-        moveMira(dir: direction, duration: Double(time))
-        
-        counter += 1
-        
-        print("\n toque \(counter) direction: \(direction)")
-        
-        //MARK: COMENTADO PARA TESTAR A POSIÇÃO
-        
-        //messageToSend = ["sender": peerName, "x": xPos, "y": yPos]
+    func sendCoordinates(dx: CGFloat, dy: CGFloat){
+        let messageToSend: [String:Any] = ["sender": peerName, "x": dx, "y": dy]
         
         //TODO: PRECISA REVISAR!
-        
-        /*
         if appDelegate.mpcManager.sendData(dictionaryData: messageToSend, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
             print("message sent")
         } else {
             print("error: message not sent")
         }
-         */
+    }
+    
+    func touchDown(atPoint pos : CGPoint) {
+        touch2 = pos
+        
+        if pos.x < fronteira {
+        miraNode?.position = pos
+        miraNode?.alpha = 1
+        }
+        
+    }
+    
+    func touchMoved(toPoint pos : CGPoint) {
+        counter += 1
+        
+        touch1 = touch2
+        touch2 = pos
+        
+        let direction = CGVector(point1: touch1, point2: touch2)
+        
+        print("\n 1. toque \(counter) direction: \(direction)")
+        
+        moveMira(dir: direction)
+
+        //MARK: COMENTADO PARA TESTAR A POSIÇÃO
+        sendCoordinate(dx: direction.dx, dy: direction.dy)
  
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        /*if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }*/
-        
-        touch1 = CGPoint.zero;
-        touch2 = CGPoint.zero;
-        
-        miraNode?.removeAllActions()
-        
         miraNode?.alpha = 0
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        /*if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }*/
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        if let t = touches.first {
+            self.touchDown(atPoint: t.location(in: self)) }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let t = touches.first!
-            self.touchMoved(toPoint: t.location(in: self))
+        //self.touchMoved(toPoint: t.location(in: self)) ??
+        touched = true
+        location = t.location(in: self)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        if let t = touches.first { self.touchUp(atPoint: t.location(in: self)) }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        if let t = touches.first { self.touchUp(atPoint: t.location(in: self)) }
     }
     
-    
     override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
         // Called before each frame is rendered
+        if touched{
+            touched = false
+            //faci tretas
+            self.touchMoved(toPoint: location)
+        }
+        else{
+            miraNode!.physicsBody!.velocity = CGVector.zero
+        }
+        
     }
 }

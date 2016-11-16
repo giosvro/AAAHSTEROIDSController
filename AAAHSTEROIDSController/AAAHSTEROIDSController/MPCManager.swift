@@ -65,7 +65,7 @@ class MPCManager: NSObject {
     }
     
     //TODO: mudar o tipo de dado enviado para [String:Any] para enviar coordenadas e bool
-    func sendData(dictionaryData: [String:String], toPeer: MCPeerID) -> Bool{
+    func sendData(dictionaryData: [String:Any], toPeer: MCPeerID) -> Bool{
         
         let dataToSend: Data = NSKeyedArchiver.archivedData(withRootObject: dictionaryData)
         let peerArray: [MCPeerID] = [toPeer]

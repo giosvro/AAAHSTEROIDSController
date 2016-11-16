@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E8FAA4E1DDCFE2600CE9DC9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8FAA4D1DDCFE2600CE9DC9 /* Extensions.swift */; };
 		2EE0A8DF1DCCD6A700CD9486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE0A8DE1DCCD6A700CD9486 /* AppDelegate.swift */; };
 		2EE0A8E11DCCD6A700CD9486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2EE0A8E01DCCD6A700CD9486 /* GameScene.sks */; };
 		2EE0A8E31DCCD6A700CD9486 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2EE0A8E21DCCD6A700CD9486 /* Actions.sks */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E8FAA4D1DDCFE2600CE9DC9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2EE0A8DB1DCCD6A700CD9486 /* AAAHSTEROIDSController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAAHSTEROIDSController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE0A8DE1DCCD6A700CD9486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2EE0A8E01DCCD6A700CD9486 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E8FAA4C1DDCFE0D00CE9DC9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2E8FAA4D1DDCFE2600CE9DC9 /* Extensions.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		2EE0A8D21DCCD6A700CD9486 = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +115,7 @@
 		2EE0A8DD1DCCD6A700CD9486 /* AAAHSTEROIDSController */ = {
 			isa = PBXGroup;
 			children = (
+				2E8FAA4C1DDCFE0D00CE9DC9 /* Resources */,
 				2EE0A8DE1DCCD6A700CD9486 /* AppDelegate.swift */,
 				2EE0A8E01DCCD6A700CD9486 /* GameScene.sks */,
 				2EE0A8E21DCCD6A700CD9486 /* Actions.sks */,
@@ -276,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E8FAA4E1DDCFE2600CE9DC9 /* Extensions.swift in Sources */,
 				2EE0A8E51DCCD6A700CD9486 /* GameScene.swift in Sources */,
 				2EE0A8E71DCCD6A700CD9486 /* GameViewController.swift in Sources */,
 				2EE0A9131DCCD78B00CD9486 /* MPCManager.swift in Sources */,
@@ -528,6 +540,7 @@
 				2EE0A90B1DCCD6A700CD9486 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2EE0A90C1DCCD6A700CD9486 /* Build configuration list for PBXNativeTarget "AAAHSTEROIDSControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +549,7 @@
 				2EE0A90E1DCCD6A700CD9486 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2EE0A90F1DCCD6A700CD9486 /* Build configuration list for PBXNativeTarget "AAAHSTEROIDSControllerUITests" */ = {
 			isa = XCConfigurationList;
@@ -544,6 +558,7 @@
 				2EE0A9111DCCD6A700CD9486 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
