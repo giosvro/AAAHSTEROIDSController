@@ -31,7 +31,7 @@ class GameScene: SKScene {
     
     //booleana para verificar se o usuário está tocando fora do trackpad
     var inside: Bool = false
-
+    
     private var miraNode : SKSpriteNode?
     private var spinnyNode : SKShapeNode?
     
@@ -65,15 +65,30 @@ class GameScene: SKScene {
         miraNode?.physicsBody?.velocity = mutableDir
     }
     
-    func sendCoordinates(dx: CGFloat, dy: CGFloat){
-        let messageToSend: [String:Any] = ["sender": peerName, "x": dx, "y": dy]
-        
+    
+    func sendMessage(messageDictionary: Dictionary<String, Any>) {
         //TODO: PRECISA REVISAR!
-        if appDelegate.mpcManager.sendData(dictionaryData: messageToSend, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
+        if appDelegate.mpcManager.sendData(dictionaryData: messageDictionary, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
             print("message sent")
         } else {
             print("error: message not sent")
         }
+    }
+    
+    func fire() {
+        print("\nFIRE!!!")
+        
+        let messageToSend: [String:Any] = ["sender": peerName, "shoot": true]
+        
+        sendMessage(messageDictionary: messageToSend)
+        
+    }
+    
+    func sendCoordinates(dx: CGFloat, dy: CGFloat, shoot: Bool){
+        
+        let messageToSend: [String:Any] = ["sender": peerName, "dx": Double(dx), "dy": Double(dy), "shoot": false]
+        
+        sendMessage(messageDictionary: messageToSend)
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -99,7 +114,7 @@ class GameScene: SKScene {
         moveMira(dir: direction)
 
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
-        //sendCoordinates(dx: direction.dx, dy: direction.dy)
+        sendCoordinates(dx: direction.dx, dy: direction.dy, shoot: false)
  
     }
     
@@ -107,9 +122,6 @@ class GameScene: SKScene {
         miraNode?.alpha = 0
     }
     
-    func fire() {
-        print("\nFIRE!!!")
-    }
     
     //MARK: touch detection starts here
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
