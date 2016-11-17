@@ -13,7 +13,6 @@ class GameScene: SKScene {
     
     //TODO: mudar para string:any depois ::: duvida
     
-    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var peerName = String()
@@ -30,8 +29,9 @@ class GameScene: SKScene {
     var touched : Bool = false
     var location : CGPoint!
     
-    //var location = ()
-    
+    //booleana para verificar se o usuário está tocando fora do trackpad
+    var inside: Bool = false
+
     private var miraNode : SKSpriteNode?
     private var spinnyNode : SKShapeNode?
     
@@ -40,9 +40,7 @@ class GameScene: SKScene {
 
         fronteira = 0.2*view.bounds.size.width
         peerName = appDelegate.mpcManager.peerID.displayName
-        
-        //messageToSend = [peerName:["x":"", "y": ""]]
-        
+
         //node usado foi criado na SKScene do storyboard
         self.miraNode = self.childNode(withName: "//mira") as? SKSpriteNode
         if let mira = self.miraNode {
@@ -101,7 +99,7 @@ class GameScene: SKScene {
         moveMira(dir: direction)
 
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
-        sendCoordinate(dx: direction.dx, dy: direction.dy)
+        //sendCoordinates(dx: direction.dx, dy: direction.dy)
  
     }
     
@@ -109,16 +107,36 @@ class GameScene: SKScene {
         miraNode?.alpha = 0
     }
     
+    func fire() {
+        print("\nFIRE!!!")
+    }
+    
+    //MARK: touch detection starts here
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let t = touches.first {
-            self.touchDown(atPoint: t.location(in: self)) }
+            let loc: CGPoint = t.location(in: self)
+            print("\nCHEGOU AQUI")
+            print("\nNODE TOUCHED: \(nodes(at: loc)[0])")
+            if loc.x >= fronteira {
+                inside = false
+                if (nodes(at: loc)[0]).name != nil && (nodes(at: loc)[0]).name  == "shootButton" {
+                    self.fire()
+                    print("\n IS OUTSIDE")
+                }
+            }
+            else {
+                inside = true
+                self.touchDown(atPoint: loc)
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let t = touches.first!
-        //self.touchMoved(toPoint: t.location(in: self)) ??
         touched = true
         location = t.location(in: self)
+        print("touchesMoved")
+        checkTouchShadowVisibility(loc: location)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,20 +144,32 @@ class GameScene: SKScene {
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let t = touches.first { self.touchUp(atPoint: t.location(in: self)) }
+        if let t = touches.first {
+            self.touchUp(atPoint: t.location(in: self)) }
     }
+    //MARK: touch detection ends here
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         // Called before each frame is rendered
+        
         if touched{
             touched = false
             //faci tretas
-            self.touchMoved(toPoint: location)
+            if inside {
+                self.touchMoved(toPoint: location) }
         }
+            
         else{
             miraNode!.physicsBody!.velocity = CGVector.zero
         }
         
+    }
+    
+    func checkTouchShadowVisibility(loc: CGPoint) {
+        if loc.x < fronteira {
+            inside = true
+            if  miraNode?.alpha == 0 { miraNode?.alpha = 1 }
+        }
     }
 }
