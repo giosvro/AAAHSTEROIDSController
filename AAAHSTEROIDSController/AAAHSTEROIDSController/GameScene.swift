@@ -33,11 +33,9 @@ class GameScene: SKScene {
     var inside: Bool = false
     
     private var miraNode : SKSpriteNode?
-    private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
         
-
         fronteira = 0.2*view.bounds.size.width
         peerName = appDelegate.mpcManager.peerID.displayName
 
@@ -58,11 +56,14 @@ class GameScene: SKScene {
         
         if ((miraNode?.position.x)! >= fronteira && dir.dx > 0) {
             print("\n 3. verifica fronteira")
+            inside = false
             mutableDir.dx = 0
         }
         
         mutableDir.applyModule(speed: velocidade)
         miraNode?.physicsBody?.velocity = mutableDir
+        
+        
     }
     
     
@@ -81,7 +82,6 @@ class GameScene: SKScene {
         let messageToSend: [String:Any] = ["sender": peerName, "shoot": true]
         
         sendMessage(messageDictionary: messageToSend)
-        
     }
     
     func sendCoordinates(dx: CGFloat, dy: CGFloat, shoot: Bool){
@@ -107,19 +107,28 @@ class GameScene: SKScene {
         touch1 = touch2
         touch2 = pos
         
-        let direction = CGVector(point1: touch1, point2: touch2)
+        var direction = CGVector(point1: touch1, point2: touch2)
         
         print("\n 1. toque \(counter) direction: \(direction)")
         
         moveMira(dir: direction)
 
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
+        if !inside { direction.dx = 0.0 }
+        
         sendCoordinates(dx: direction.dx, dy: direction.dy, shoot: false)
+        
+        inside = true
  
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        miraNode?.alpha = 0
+        if inside {
+            miraNode?.alpha = 0
+            sendCoordinates(dx: 0.0, dy: 0.0, shoot: false)
+            inside = false
+        }
+        
     }
     
     
@@ -172,10 +181,9 @@ class GameScene: SKScene {
                 self.touchMoved(toPoint: location) }
         }
             
-        else{
+        else {
             miraNode!.physicsBody!.velocity = CGVector.zero
         }
-        
     }
     
     func checkTouchShadowVisibility(loc: CGPoint) {
