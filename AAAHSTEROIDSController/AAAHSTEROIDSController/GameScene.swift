@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+enum MessageType: Int {
+    case MOVE = 1, FIRE, RECHARGE
+}
+
 class GameScene: SKScene {
     
     //TODO: mudar para string:any depois ::: duvida
@@ -48,6 +52,15 @@ class GameScene: SKScene {
         }
     }
     
+    func sendMessage(messageDictionary: Dictionary<String, Any>) {
+        //TODO: PRECISA REVISAR!
+        if appDelegate.mpcManager.sendData(dictionaryData: messageDictionary, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
+            print("message sent")
+        } else {
+            print("error: message not sent")
+        }
+    }
+    
     func moveMira(dir: CGVector){
         
         var mutableDir = dir
@@ -61,32 +74,26 @@ class GameScene: SKScene {
         }
         
         mutableDir.applyModule(speed: velocidade)
-        miraNode?.physicsBody?.velocity = mutableDir
-        
-        
-    }
-    
-    
-    func sendMessage(messageDictionary: Dictionary<String, Any>) {
-        //TODO: PRECISA REVISAR!
-        if appDelegate.mpcManager.sendData(dictionaryData: messageDictionary, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
-            print("message sent")
-        } else {
-            print("error: message not sent")
-        }
+        miraNode?.physicsBody?.velocity = mutableDir    
     }
     
     func fire() {
         print("\nFIRE!!!")
         
-        let messageToSend: [String:Any] = ["sender": peerName, "shoot": true]
+        let messageToSend: [String:Any] = ["sender": peerName, "message": MessageType.FIRE.rawValue]
         
         sendMessage(messageDictionary: messageToSend)
     }
     
-    func sendCoordinates(dx: CGFloat, dy: CGFloat, shoot: Bool){
+    func sendCoordinates(dx: CGFloat, dy: CGFloat){
         
-        let messageToSend: [String:Any] = ["sender": peerName, "dx": Double(dx), "dy": Double(dy), "shoot": false]
+        let messageToSend: [String:Any] = ["sender": peerName, "dx": Double(dx), "dy": Double(dy), "message": MessageType.MOVE.rawValue]
+        
+        sendMessage(messageDictionary: messageToSend)
+    }
+    
+    func recharge(){
+        let messageToSend: [String:Any] = ["sender": peerName, "message": MessageType.RECHARGE.rawValue]
         
         sendMessage(messageDictionary: messageToSend)
     }
@@ -116,7 +123,7 @@ class GameScene: SKScene {
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
         if !inside { direction.dx = 0.0 }
         
-        sendCoordinates(dx: direction.dx, dy: direction.dy, shoot: false)
+        sendCoordinates(dx: direction.dx, dy: direction.dy)
         
         inside = true
  
@@ -125,12 +132,11 @@ class GameScene: SKScene {
     func touchUp(atPoint pos : CGPoint) {
         if inside {
             miraNode?.alpha = 0
-            sendCoordinates(dx: 0.0, dy: 0.0, shoot: false)
+            sendCoordinates(dx: 0.0, dy: 0.0)
             inside = false
         }
         
     }
-    
     
     //MARK: touch detection starts here
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -169,6 +175,12 @@ class GameScene: SKScene {
             self.touchUp(atPoint: t.location(in: self)) }
     }
     //MARK: touch detection ends here
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if (motion == UIEventSubtype.motionShake){
+            print("\n \n RECHARGE!")
+        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)

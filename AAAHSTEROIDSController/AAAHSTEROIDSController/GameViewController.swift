@@ -14,6 +14,7 @@ import MultipeerConnectivity
 class GameViewController: UIViewController {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var gameScene = GameScene()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +31,50 @@ class GameViewController: UIViewController {
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                
+                gameScene = scene as! GameScene
+                gameScene.name = "gameScene"
+                print("\n scene name: \(gameScene.name) \n")
                 // Present the scene
-                view.presentScene(scene)
+                view.presentScene(gameScene)
             }
             
             view.ignoresSiblingOrder = true
             
             view.showsFPS = true
             view.showsNodeCount = true
+            
+        }
+    }
+    
+//    func recharge() {
+//        
+//        let peerName = appDelegate.mpcManager.peerID.displayName
+//        
+//        let messageToSend: [String:Any] = ["sender": peerName, "message": MessageType.FIRE]
+//        
+//        sendMessage(messageDictionary: messageToSend)
+//    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.resignFirstResponder()
+        super.viewWillDisappear(true)
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if (motion == UIEventSubtype.motionShake){
+            if gameScene.name == "gameScene"{
+            print("\n \n SHAKED!!!")
+                gameScene.recharge()
+            }
         }
     }
 
@@ -64,64 +100,3 @@ class GameViewController: UIViewController {
     }
 }
 
-extension GameViewController: MPCManagerDelegate {
-    
-    func foundPeer() {
-        print("Found Peer!")
-    }
-    
-    
-    func lostPeer() {
-        print("Lost Peer!")
-    }
-    
-
-    func invitationWasReceived(fromPeer: String, codeReceived: String?) {
-        //var textField: UITextField?
-        
-        //criação de um alert view em que o usuario digita o código que aparece na Apple TV para fazer a conexão
-        
-        let alert = UIAlertController(title: "Join a match", message: "Enter the code shown on your Apple TV", preferredStyle: .alert)
-
-        alert.addTextField(configurationHandler: textFieldHandler)
-        
-        
-        
-        alert.addAction(UIAlertAction(title: "Connect", style: UIAlertActionStyle.default, handler:{ (UIAlertAction) in
-            
-            let codeTyped = alert.textFields?.first?.text
-            print("\n \n CODE RECEIVED: \(codeReceived)")
-            print("\n \n CODE TYPED: \(codeTyped)")
-            
-            if codeReceived != nil {
-                if codeTyped == codeReceived {
-                    self.appDelegate.mpcManager.invitationHandler(true, self.appDelegate.mpcManager.session)
-                    print("Will start session with \(fromPeer)")
-                }
-                else {
-                    //TODO: implementar um erro decente para código errado
-                    print("ERROR! Wrong code typed. Couldn't start session with \(fromPeer)")
-                    
-                    self.appDelegate.mpcManager.invitationHandler(false, nil)
-                }
-            }
-            
-        }))
-        
-        OperationQueue.main.addOperation { () -> Void in
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    func textFieldHandler(textField: UITextField!)
-    {
-        if (textField) != nil {
-            textField.placeholder = "code"
-        }
-    }
-    
-    //quando a conexão é estabelecida, a tela muda para a tela do controle
-    func connectedWithPeer(peerID: MCPeerID) {
-        loadControllerScene()
-    }
-}
