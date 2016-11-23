@@ -68,6 +68,10 @@ extension GameViewController: MPCManagerDelegate {
     
     //quando a conexão é estabelecida, a tela muda para a tela do controle
     func connectedWithPeer(peerID: MCPeerID) {
+        DispatchQueue.main.async {
+            self.verificationView.isHidden = true
+        }
+        
         loadControllerScene()
     }
 }

@@ -13,6 +13,7 @@ import MultipeerConnectivity
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var verificationView: UIView!
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var gameScene = GameScene()
 
