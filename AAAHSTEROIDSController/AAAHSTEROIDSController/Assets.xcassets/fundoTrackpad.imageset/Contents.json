@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "fundo.png",
+      "filename" : "fundoTrackpad.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "fundo@2x.png",
+      "filename" : "fundoTrackpad@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "fundo@3x.png",
+      "filename" : "fundoTrackpad@3x.png",
       "scale" : "3x"
     }
   ],

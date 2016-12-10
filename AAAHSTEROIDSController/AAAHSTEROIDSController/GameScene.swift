@@ -149,6 +149,7 @@ class GameScene: SKScene {
                 if (nodes(at: loc)[0]).name != nil && (nodes(at: loc)[0]).name  == "shootButton" {
                     self.fire()
                     print("\n IS OUTSIDE")
+                    
                 }
             }
             else {
@@ -157,6 +158,7 @@ class GameScene: SKScene {
             }
         }
     }
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let t = touches.first!

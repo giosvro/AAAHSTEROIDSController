@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "aimPosition.png",
+      "filename" : "fundoSpace.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "aimPosition@2x.png",
+      "filename" : "fundoSpace@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "aimPosition@3x.png",
+      "filename" : "fundoSpace@3x.png",
       "scale" : "3x"
     }
   ],
