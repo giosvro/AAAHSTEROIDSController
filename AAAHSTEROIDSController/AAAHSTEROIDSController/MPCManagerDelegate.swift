@@ -63,6 +63,7 @@ extension GameViewController: MPCManagerDelegate {
     {
         if (textField) != nil {
             textField.placeholder = "code"
+            textField.keyboardType = .numberPad
         }
     }
     
