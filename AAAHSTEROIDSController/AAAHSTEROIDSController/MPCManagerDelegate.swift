@@ -31,7 +31,7 @@ extension GameViewController: MPCManagerDelegate {
         
         alert.addTextField(configurationHandler: textFieldHandler)
         
-        
+        //alert.view.bringSubview(toFront: verificationView)
         
         alert.addAction(UIAlertAction(title: "Connect", style: UIAlertActionStyle.default, handler:{ (UIAlertAction) in
             
@@ -73,5 +73,12 @@ extension GameViewController: MPCManagerDelegate {
         }
         
         loadControllerScene()
+    }
+    
+    
+    func disconnectedWithPeer(peerID: MCPeerID) {
+            DispatchQueue.main.async {
+                self.verificationView.isHidden = false
+            }
     }
 }

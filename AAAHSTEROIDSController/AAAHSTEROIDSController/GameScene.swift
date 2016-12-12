@@ -48,16 +48,20 @@ class GameScene: SKScene {
         if let mira = self.miraNode {
             mira.alpha = 0.0
             mira.zPosition = 5
-            //mira.physicsBody = SKPhysicsBody(rectangleOf: mira.size)
         }
     }
     
     func sendMessage(messageDictionary: Dictionary<String, Any>) {
         //TODO: PRECISA REVISAR!
+        
+        if (appDelegate.mpcManager.session.connectedPeers.count > 0) {
         if appDelegate.mpcManager.sendData(dictionaryData: messageDictionary, toPeer: appDelegate.mpcManager.session.connectedPeers[0]) {
             print("message sent")
         } else {
             print("error: message not sent")
+        }
+        } else {
+            print("\n ---- PEER NÃO CONECTADO ERRO NO ENVIO DE MSG")
         }
     }
     
@@ -116,8 +120,6 @@ class GameScene: SKScene {
         
         var direction = CGVector(point1: touch1, point2: touch2)
         
-        print("\n 1. toque \(counter) direction: \(direction)")
-        
         moveMira(dir: direction)
 
         //MARK: COMENTADO PARA TESTAR A POSIÇÃO
@@ -142,7 +144,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let t = touches.first {
             let loc: CGPoint = t.location(in: self)
-            print("\nCHEGOU AQUI")
+            
             print("\nNODE TOUCHED: \(nodes(at: loc)[0])")
             if loc.x >= fronteira {
                 inside = false
@@ -164,7 +166,7 @@ class GameScene: SKScene {
         let t = touches.first!
         touched = true
         location = t.location(in: self)
-        print("touchesMoved")
+        
         checkTouchShadowVisibility(loc: location)
     }
     

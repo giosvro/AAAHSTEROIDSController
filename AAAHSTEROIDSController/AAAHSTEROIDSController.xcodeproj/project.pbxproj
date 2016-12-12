@@ -243,7 +243,7 @@
 				TargetAttributes = {
 					2EE0A8DA1DCCD6A700CD9486 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 4BPZR4X6FJ;
+						DevelopmentTeam = RRK5VWU2RB;
 						ProvisioningStyle = Automatic;
 					};
 					2EE0A8F41DCCD6A700CD9486 = {
@@ -469,7 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4BPZR4X6FJ;
+				DEVELOPMENT_TEAM = RRK5VWU2RB;
 				INFOPLIST_FILE = AAAHSTEROIDSController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gba.AAAHSTEROIDSController;
@@ -482,7 +482,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4BPZR4X6FJ;
+				DEVELOPMENT_TEAM = RRK5VWU2RB;
 				INFOPLIST_FILE = AAAHSTEROIDSController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = gba.AAAHSTEROIDSController;
