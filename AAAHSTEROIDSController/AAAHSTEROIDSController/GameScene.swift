@@ -49,6 +49,8 @@ class GameScene: SKScene {
             mira.alpha = 0.0
             mira.zPosition = 5
         }
+        
+        print("FIM DIDMOVE")
     }
     
     func sendMessage(messageDictionary: Dictionary<String, Any>) {
