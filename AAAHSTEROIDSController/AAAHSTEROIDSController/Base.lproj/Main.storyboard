@@ -67,7 +67,8 @@
                                         <frame key="frameInset" minY="-1" width="667" height="375"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, launch the game on your Apple TV and wait for invitation." textAlignment="center" lineBreakMode="headTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAg-zI-k57">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Establishing connection with Apple TV" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAg-zI-k57">
+                                        <frame key="frameInset" minX="8" minY="146" width="651" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="378" id="2Wr-uW-sUn"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="378" id="Xb7-Ma-dxg"/>
@@ -76,18 +77,18 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAHSTEROIDS!" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcI-ST-vX3">
-                                        <fontDescription key="fontDescription" name="Helvetica-BoldOblique" family="Helvetica" pointSize="37"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="A7a-Ze-4RU">
+                                        <frame key="frameInset" minX="315" minY="240" width="37" height="37"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="SAg-zI-k57" firstAttribute="centerY" secondItem="QL8-J3-1Oe" secondAttribute="centerY" id="3xv-mZ-PyY"/>
                                     <constraint firstItem="SAg-zI-k57" firstAttribute="centerX" secondItem="QL8-J3-1Oe" secondAttribute="centerX" id="LfP-MP-gMN"/>
-                                    <constraint firstItem="EcI-ST-vX3" firstAttribute="top" secondItem="QL8-J3-1Oe" secondAttribute="top" constant="20" id="ge3-Z0-67j"/>
-                                    <constraint firstItem="EcI-ST-vX3" firstAttribute="centerX" secondItem="QL8-J3-1Oe" secondAttribute="centerX" id="gzP-CA-2PW"/>
+                                    <constraint firstItem="A7a-Ze-4RU" firstAttribute="top" secondItem="SAg-zI-k57" secondAttribute="bottom" constant="34" id="brB-MU-pQY"/>
+                                    <constraint firstItem="SAg-zI-k57" firstAttribute="leading" secondItem="QL8-J3-1Oe" secondAttribute="leading" constant="8" id="cBf-TE-xop"/>
+                                    <constraint firstAttribute="trailing" secondItem="SAg-zI-k57" secondAttribute="trailing" constant="8" id="fBe-ea-CWT"/>
+                                    <constraint firstItem="A7a-Ze-4RU" firstAttribute="centerX" secondItem="QL8-J3-1Oe" secondAttribute="centerX" id="tsY-fF-3G6"/>
                                 </constraints>
                             </view>
                         </subviews>
