@@ -1,11 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="8X7-4j-VGS">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="gBg-eV-1Zj">
+            <objects>
+                <viewController id="8X7-4j-VGS" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VrW-qa-V8E"/>
+                        <viewControllerLayoutGuide type="bottom" id="nd5-p9-PCs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="B3g-WP-aJz">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fundoLiso" translatesAutoresizingMaskIntoConstraints="NO" id="adK-Gp-DCh"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="howToImage" translatesAutoresizingMaskIntoConstraints="NO" id="emX-cI-a7k"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdq-gW-E1w">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="Cs1-dj-8JJ"/>
+                                    <constraint firstAttribute="width" constant="177" id="MZ8-84-opf"/>
+                                </constraints>
+                                <state key="normal" image="joinAMatch"/>
+                                <connections>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="vLV-EG-F3u"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="emX-cI-a7k" firstAttribute="top" secondItem="VrW-qa-V8E" secondAttribute="bottom" constant="67" id="21P-sU-nXX"/>
+                            <constraint firstItem="emX-cI-a7k" firstAttribute="leading" secondItem="B3g-WP-aJz" secondAttribute="leadingMargin" constant="92" id="59X-My-VlC"/>
+                            <constraint firstAttribute="bottom" secondItem="fdq-gW-E1w" secondAttribute="bottom" constant="20" symbolic="YES" id="5Rx-1n-rDX"/>
+                            <constraint firstItem="adK-Gp-DCh" firstAttribute="centerX" secondItem="emX-cI-a7k" secondAttribute="centerX" id="BOV-4B-KWt"/>
+                            <constraint firstItem="adK-Gp-DCh" firstAttribute="bottom" secondItem="nd5-p9-PCs" secondAttribute="top" id="EBg-hW-5fF"/>
+                            <constraint firstItem="fdq-gW-E1w" firstAttribute="top" secondItem="emX-cI-a7k" secondAttribute="bottom" constant="74" id="WAg-E6-GVi"/>
+                            <constraint firstItem="fdq-gW-E1w" firstAttribute="centerX" secondItem="B3g-WP-aJz" secondAttribute="centerX" id="bSu-di-bUP"/>
+                            <constraint firstItem="emX-cI-a7k" firstAttribute="centerX" secondItem="B3g-WP-aJz" secondAttribute="centerX" id="oMp-EV-ULV"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vvU-ZJ-vPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-170.46476761619192" y="-666.39999999999998"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -67,6 +110,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="fundoLiso" width="667" height="375"/>
         <image name="fundoSpace" width="667" height="375"/>
+        <image name="howToImage" width="393" height="138"/>
+        <image name="joinAMatch" width="284" height="84"/>
     </resources>
 </document>
